@@ -1,0 +1,12 @@
+# 
+
+node_modules
+dist
+
+*.stfolder
+*.stignore
+*.awcache
+*.heapsnapshot
+*.DS_STORE
+*.log
+

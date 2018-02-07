@@ -1,0 +1,18 @@
+{
+	"scripts": {
+		"i": "npm install",
+		"r": "npm run start",
+		"start": "ts-node 15-minute-rule-reminder.ts"
+	},
+	"dependencies": {
+		"cron": "latest"
+	},
+	"devDependencies": {
+		"@types/cron": "latest",
+		"@types/eyes": "latest",
+		"@types/node": "latest",
+		"eyes": "latest",
+		"ts-node": "latest",
+		"typescript": "latest"
+	}
+}
