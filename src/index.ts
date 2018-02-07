@@ -5,16 +5,17 @@ require('source-map-support').install()
 import * as eyes from 'eyes'
 import * as cron from 'cron'
 import * as loudness from 'loudness'
-import * as playsound from 'play-sound'
+import * as psound from 'play-sound'
 
 
 
-const player = playsound({})
+const player = psound()
 
-function playMP3(path: string): Promise<void> {
-	return new Promise(function(resolve, reject) {
+function playMP3(path: string) {
+	return new Promise<void>(function(resolve, reject) {
 		player.play(path, function(error) {
-			if (error) return
+			if (error) return reject(error);
+			resolve()
 		})
 	})
 }
