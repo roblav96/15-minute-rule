@@ -1,6 +1,6 @@
 {
 	"name": "15-minute-rule",
-	"version": "0.9.0",
+	"version": "0.9.1",
 	"description": "System notification dings every 15 minutes reminding you to stop OT'ing (overthinking)",
 	"author": {
 		"name": "Robert Laverty",

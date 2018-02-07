@@ -5,7 +5,6 @@ process.dev = process.argv.indexOf('--dev') >= 0
 
 import * as eyes from 'eyes'
 import * as clc from 'cli-color'
-import * as throbber from 'cli-color/throbber'
 import * as cron from 'cron'
 import * as loudness from 'loudness'
 const player = require('play-sound')()
@@ -37,8 +36,6 @@ function init() {
 		SYSTEM.ready = true
 		eyes.inspect(SYSTEM.ready, '\n\ninit > ready')
 		if (process.dev) playMP3(CONFIG.sounds.minor);
-
-		throbber(s => process.stdout.write(s), 100).start()
 		setInterval(() => process.stdout.write((clc as any).erase.lineRight), 1000)
 
 	})
