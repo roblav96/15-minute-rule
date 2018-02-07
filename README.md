@@ -4,8 +4,10 @@ Remind yourself to stop OT'ing (overthinking) and stay focused on the task at ha
 
 ## Installation
 ```shell
-npm i ts-node -g
-npm i
+npm install ts-node -g
+```
+```shell
+npm install
 ```
 
 ## Usage
