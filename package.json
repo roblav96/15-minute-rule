@@ -1,6 +1,6 @@
 {
 	"name": "15-minute-rule",
-	"version": "0.4.0",
+	"version": "0.6.0",
 	"description": "System notification dings every 15 minutes reminding you to stop OT'ing (overthinking)",
 	"author": {
 		"name": "Robert Laverty",
@@ -32,12 +32,12 @@
 		"increase",
 		"productivity"
 	],
-	"main": "dist/index.js",
+	"main": "dist/main.js",
 	"bin": {
-		"15mrr": "dist/index.js"
+		"15-minute-rule": "dist/main.js"
 	},
 	"files": [
-		"sounds/KzurbSonar.mp3",
+		"assets/",
 		"dist/",
 		"LICENSE.md"
 	],
@@ -47,29 +47,25 @@
 	"scripts": {
 		"i": "npm install",
 		"r": "npm run dev",
-		"dev": "ts-node-dev --no-deps --no-notify src/index.ts --dev",
+		"dev": "ts-node-dev --no-deps --no-notify main.ts --dev",
+		"diag": "clear && printf \"\\e[3J\" && printf 'Running TypeScript Compiler...\n' && tsc --diagnostics --listFiles --listEmittedFiles",
 		"rm": "npm run purge",
 		"purge": "npm run clean && rimraf node_modules",
 		"clean": "rimraf dist",
-		"tsc": "tsc",
-		"build": "npm run clean && npm run tsc",
-		"start": "node dist/index.js",
-		"prepublish": "npm run build"
+		"build": "npm run clean && tsc",
+		"start": "npm run build && node dist/main.js",
+		"prepare": "npm run build"
 	},
 	"dependencies": {
 		"cron": "latest",
 		"loudness": "latest",
-		"node-notifier": "latest",
 		"play-sound": "latest"
 	},
 	"devDependencies": {
 		"@types/node": "latest",
 		"@types/cron": "latest",
-		"@types/eyes": "latest",
-		"@types/node-notifier": "latest",
 		"eyes": "latest",
 		"rimraf": "latest",
-		"source-map-support": "latest",
 		"ts-node": "latest",
 		"ts-node-dev": "latest",
 		"tslint": "latest",
