@@ -1,13 +1,9 @@
 // 
 
-declare global {
-	const eyes: any
-	namespace NodeJS { interface Process { dev: boolean } }
-}
-
+declare global { namespace NodeJS { interface Process { dev: boolean } } }
 process.dev = process.argv.indexOf('--dev') >= 0
-if (process.dev) (global as any).eyes = require('eyes');
 
+import * as eyes from 'eyes'
 import * as cron from 'cron'
 import * as loudness from 'loudness'
 const player = require('play-sound')()
@@ -21,7 +17,7 @@ const CONFIG = {
 
 
 
-const SYSTEM = { muted: false, volume: 10, ready: false }
+const SYSTEM = { muted: false, volume: 10, ready: process.dev }
 
 function init() {
 	return Promise.resolve().then(function() {
@@ -33,18 +29,19 @@ function init() {
 		return Promise.resolve()
 
 	}).catch(function(error) {
-		console.error('init > error', error)
-	}).then(function() { SYSTEM.ready = true })
+		console.error('init > ERROR', error)
+	}).then(function() {
+		SYSTEM.ready = true
+		eyes.inspect(SYSTEM.ready, 'init > ready')
+	})
 }
 setImmediate(init)
 
 
 
 function onTick(sound: keyof typeof CONFIG.sounds) {
-	if (!SYSTEM.ready && !process.dev) {
-		console.warn('!SYSTEM.ready')
-		return Promise.resolve()
-	}
+	eyes.inspect(SYSTEM.ready, 'onTick > ' + sound + ' > ready')
+	if (!SYSTEM.ready) return Promise.resolve();
 
 	return Promise.resolve().then(function() {
 		return Promise.all([getMuted(), getVolume()])
@@ -52,13 +49,7 @@ function onTick(sound: keyof typeof CONFIG.sounds) {
 	}).then(function(resolved) {
 		SYSTEM.muted = resolved[0]
 		if (Number.isFinite(resolved[1])) SYSTEM.volume = resolved[1];
-
-		console.log('system >')
-		eyes.inspect(SYSTEM)
-
 		let volume = SYSTEM.muted ? CONFIG.volumes.low : CONFIG.volumes.high
-		console.log('volume >')
-		eyes.inspect(volume)
 		return setVolume(volume)
 
 	}).then(function() {
@@ -70,39 +61,48 @@ function onTick(sound: keyof typeof CONFIG.sounds) {
 			setVolume(SYSTEM.volume),
 		])
 
-	}).then(function() {
-		console.log('onTick > DONE')
-
 	}).catch(function(error) {
-		console.error('onTick > error', error)
+		console.error('onTick > ERROR', error)
 	})
 }
 
 
 
 new cron.CronJob({
-	cronTime: '0/15 * * * *',
+	cronTime: '*/5 * * * *',
 	timeZone: 'America/New_York',
 	start: true,
-	onTick() { onTick('major') },
-	// runOnInit: process.dev,
+	onTick() {
+		let sound = 'minor' as keyof typeof CONFIG.sounds
+		if (new Date().getMinutes() % 15 == 0) sound = 'major';
+		onTick(sound)
+	},
+	runOnInit: process.dev,
 })
 
-new cron.CronJob({
-	cronTime: '5/15 * * * *',
-	timeZone: 'America/New_York',
-	start: true,
-	onTick() { onTick('minor') },
-	// runOnInit: process.dev,
-})
+// new cron.CronJob({
+// 	cronTime: '0/15 * * * *',
+// 	timeZone: 'America/New_York',
+// 	start: true,
+// 	onTick() { onTick('major') },
+// 	runOnInit: process.dev,
+// })
 
-new cron.CronJob({
-	cronTime: '10/15 * * * *',
-	timeZone: 'America/New_York',
-	start: true,
-	onTick() { onTick('minor') },
-	// runOnInit: process.dev,
-})
+// new cron.CronJob({
+// 	cronTime: '5/15 * * * *',
+// 	timeZone: 'America/New_York',
+// 	start: true,
+// 	onTick() { onTick('minor') },
+// 	// runOnInit: process.dev,
+// })
+
+// new cron.CronJob({
+// 	cronTime: '10/15 * * * *',
+// 	timeZone: 'America/New_York',
+// 	start: true,
+// 	onTick() { onTick('minor') },
+// 	// runOnInit: process.dev,
+// })
 
 
 
