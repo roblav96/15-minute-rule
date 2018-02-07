@@ -1,15 +1,14 @@
 
-# [15 Minute Rule](https://github.com/aretecode/awesome-advice#15-minute-rule) Reminder
-Remind yourself to stop OT'ing (overthinking) and stay focused on the task at hand.
+# [15 Minute Rule](https://github.com/aretecode/awesome-advice#15-minute-rule)
+This simple script plays the Android [KzurbSonar.mp3](https://instaud.io/1KxR) notification ringtone every 15 minutes reminding you to stay focused.
 
 ## Installation
 ```shell
-npm install
-npm install ts-node -g
+npm install 15-minute-rule -g
 ```
 
 ## Usage
 ```shell
-ts-node 15-minute-rule-reminder.ts
+15-minute-rule
 ```
 
