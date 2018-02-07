@@ -4,21 +4,13 @@
 		"module": "CommonJS",
 		"moduleResolution": "Node",
 		"lib": ["ES2015"],
-		"experimentalDecorators": true,
-		"emitDecoratorMetadata": true,
-		"skipLibCheck": true,
-		"skipDefaultLibCheck": true,
 		"removeComments": true,
-		"pretty": true,
 		"sourceMap": true,
+		"inlineSources": true,
 		"outDir": "dist"
 	},
 	"include": [
-		"./**/*.ts"
-	],
-	"exclude": [
-		"node_modules",
-		"dist"
+		"src/**/*.ts"
 	]
 }
 

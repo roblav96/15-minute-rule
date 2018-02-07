@@ -1,18 +1,76 @@
 {
+	"name": "15-minute-rule-reminder",
+	"version": "0.1.0",
+	"description": "Scheduled system notifications remind you to stop OT'ing (overthinking)",
+	"author": {
+		"name": "Robert Laverty",
+		"email": "roblav96@gmail.com",
+		"url": "https://github.com/roblav96"
+	},
+	"license": "MIT",
+	"homepage": "https://github.com/roblav96/15-minute-rule-reminder",
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/roblav96/15-minute-rule-reminder.git"
+	},
+	"bugs": {
+		"url": "https://github.com/TypeStrong/ts-node/issues"
+	},
+	"keywords": [
+		"15",
+		"minute",
+		"rule",
+		"reminder",
+		"OCD",
+		"overthink",
+		"overthinking",
+		"focus",
+		"focused",
+		"increase",
+		"productivity"
+	],
+	"main": "dist/index.js",
+	"bin": {
+		"15mrr": "dist/bin.js"
+	},
+	"files": [
+		"sounds/KzurbSonar.mp3",
+		"dist/",
+		"LICENSE.md"
+	],
+	"engines": {
+		"node": ">=4.2.0"
+	},
 	"scripts": {
 		"i": "npm install",
-		"r": "npm run start",
-		"start": "ts-node 15-minute-rule-reminder.ts"
+		"r": "npm run dev",
+		"dev": "ts-node-dev --no-deps --no-notify src/index.ts",
+		"rm": "npm run purge",
+		"purge": "npm run clean && rimraf node_modules",
+		"clean": "rimraf dist",
+		"tsc": "tsc",
+		"build": "npm run clean && npm run tsc",
+		"start": "node dist/index.js",
+		"prepublish": "npm run build"
 	},
 	"dependencies": {
-		"cron": "latest"
+		"cron": "latest",
+		"loudness": "latest",
+		"node-notifier": "latest"
 	},
 	"devDependencies": {
+		"@types/node": "latest",
 		"@types/cron": "latest",
 		"@types/eyes": "latest",
-		"@types/node": "latest",
+		"@types/node-notifier": "latest",
 		"eyes": "latest",
+		"rimraf": "latest",
+		"source-map-support": "latest",
 		"ts-node": "latest",
+		"ts-node-dev": "latest",
+		"tsc-watch": "latest",
+		"tslint": "latest",
+		"tslint-config-standard": "latest",
 		"typescript": "latest"
 	}
 }

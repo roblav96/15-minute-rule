@@ -2,13 +2,16 @@
 	"folders": [{
 		"path": ".",
 		"folder_exclude_patterns": [
-			"*.stfolder",
-			"*.awcache",
-			"*node_modules"
+			"sounds",
+			"node_modules",
+			"dist",
+			".stfolder"
 		],
 		"file_exclude_patterns": [
-			"*.stignore",
-			"*.map"
+			"README.md",
+			"LICENSE.md",
+			".stignore",
+			".DS_STORE"
 		]
 	}]
 }
