@@ -1,17 +1,17 @@
 {
-	"name": "15-minute-rule-reminder",
-	"version": "0.2.0",
-	"description": "Scheduled system notifications remind you to stop OT'ing (overthinking)",
+	"name": "15-minute-rule",
+	"version": "0.3.0",
+	"description": "System notification dings every 15 minutes reminding you to stop OT'ing (overthinking)",
 	"author": {
 		"name": "Robert Laverty",
 		"email": "roblav96@gmail.com",
 		"url": "https://github.com/roblav96"
 	},
 	"license": "MIT",
-	"homepage": "https://github.com/roblav96/15-minute-rule-reminder",
+	"homepage": "https://github.com/roblav96/15-minute-rule",
 	"repository": {
 		"type": "git",
-		"url": "git://github.com/roblav96/15-minute-rule-reminder.git"
+		"url": "git://github.com/roblav96/15-minute-rule.git"
 	},
 	"bugs": {
 		"url": "https://github.com/TypeStrong/ts-node/issues"
@@ -22,8 +22,11 @@
 		"rule",
 		"reminder",
 		"OCD",
+		"ADD",
+		"ADHD",
 		"overthink",
 		"overthinking",
+		"notification",
 		"focus",
 		"focused",
 		"increase",
@@ -73,3 +76,4 @@
 		"typescript": "latest"
 	}
 }
+
