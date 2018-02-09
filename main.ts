@@ -67,9 +67,10 @@ function onTick(sound: string) {
 
 
 function playMP3(file: string) {
+	let dirpath = __dirname.replace('/dist', '/')
 	file = 'assets/' + file + '.mp3'
 	return new Promise<void>(function(resolve, reject) {
-		player.play(file, function(error) {
+		player.play(dirpath + file, function(error) {
 			if (error) return reject(error); resolve()
 		})
 	})

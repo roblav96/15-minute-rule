@@ -1,6 +1,6 @@
 {
 	"name": "15-minute-rule",
-	"version": "0.9.5",
+	"version": "0.9.6",
 	"description": "System notification dings every 15 minutes reminding you to stop OT'ing (overthinking)",
 	"author": {
 		"name": "Robert Laverty",
@@ -59,7 +59,6 @@
 	"dependencies": {
 		"cli-color": "latest",
 		"cron": "latest",
-		"eyes": "latest",
 		"loudness": "latest",
 		"play-sound": "latest"
 	},
@@ -68,6 +67,7 @@
 		"@types/cron": "latest",
 		"@types/eyes": "latest",
 		"@types/node": "latest",
+		"eyes": "latest",
 		"source-map-support": "latest",
 		"tsc-watch": "latest",
 		"typescript": "latest"
