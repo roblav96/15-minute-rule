@@ -1,24 +1,17 @@
 // 
 
+declare global { namespace NodeJS { interface Process { dev: boolean } } }
+process.dev = process.argv.indexOf('--dev') >= 0
+
+const CONFIG = { sounds: { major: 'proxima', minor: 'click' } } // , volumes: { high: 50, low: 20 } }
+
+// 
+
 import * as eyes from 'eyes'
 import * as clc from 'cli-color'
 import * as cron from 'cron'
 import * as loudness from 'loudness'
 const player = require('play-sound')()
-
-
-
-declare global { namespace NodeJS { interface Process { dev: boolean } } }
-process.dev = process.argv.indexOf('--dev') >= 0
-console.log('process.dev >')
-eyes.inspect(process.dev)
-
-
-
-const CONFIG = {
-	sounds: { major: 'Proxima', minor: 'Selenium' },
-	volumes: { high: 50, low: 20 },
-}
 
 
 
@@ -57,6 +50,10 @@ function onTick(sound: keyof typeof CONFIG.sounds) {
 	}).then(function(resolved) {
 		SYSTEM.muted = resolved[0]
 		if (Number.isFinite(resolved[1])) SYSTEM.volume = resolved[1];
+		
+		console.log('SYSTEM >')
+		eyes.inspect(SYSTEM)
+		
 		let volume = SYSTEM.muted ? CONFIG.volumes.low : CONFIG.volumes.high
 		return setVolume(volume)
 
