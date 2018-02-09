@@ -17,7 +17,7 @@ const player = require('play-sound')()
 const CONFIG = {
 	// sounds: { major: 'proxima', minor: 'click' },
 	sound: 'click',
-	minvolume: 50,
+	minvolume: 25,
 }
 
 
