@@ -1,13 +1,17 @@
 // 
 
-declare global { namespace NodeJS { interface Process { dev: boolean } } }
-process.dev = process.argv.indexOf('--dev') >= 0
-
 import * as eyes from 'eyes'
 import * as clc from 'cli-color'
 import * as cron from 'cron'
 import * as loudness from 'loudness'
 const player = require('play-sound')()
+
+
+
+declare global { namespace NodeJS { interface Process { dev: boolean } } }
+process.dev = process.argv.indexOf('--dev') >= 0
+console.log('process.dev >')
+eyes.inspect(process.dev)
 
 
 
@@ -78,7 +82,7 @@ new cron.CronJob({
 	start: true,
 	onTick() {
 		let time = new Date().toLocaleString().split(' ').splice(1, 1)[0]
-		eyes.inspect(SYSTEM.ready, '\n\n[' + clc.bold.magenta(time) + '] onTick > ' + sound + ' > ready')
+		eyes.inspect(SYSTEM.ready, '\n\n[' + clc.bold.magenta(time) + '] onTick > ' + sounds + ' > ready')
 		let sound = 'minor' as keyof typeof CONFIG.sounds
 		if (new Date().getMinutes() % 15 == 0) sound = 'major';
 		onTick(sound)

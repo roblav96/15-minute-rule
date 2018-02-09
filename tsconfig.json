@@ -4,12 +4,16 @@
 		"module": "commonjs",
 		"moduleResolution": "node",
 		"lib": ["es2015"],
-		"removeComments": true,
-		"inlineSourceMap": true,
-		"outDir": "dist"
+		"sourceMap": true,
+		"outDir": "dist",
+		"pretty": true
 	},
 	"include": [
 		"**/*.ts"
+	],
+	"exclude": [
+		"node_modules",
+		"dist"
 	]
 }
 

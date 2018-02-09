@@ -45,13 +45,13 @@
 		"node": ">=4.2.0"
 	},
 	"scripts": {
-		"i": "npm install",
+		"i": "npm install || true",
 		"r": "npm run dev",
-		"dev": "ts-node-dev --no-deps --no-notify main.ts --dev",
-		"diag": "clear && printf \"\\e[3J\" && printf 'Running TypeScript Compiler...\n' && tsc --diagnostics --listFiles --listEmittedFiles",
+		"dev": "tsc-watch --onSuccess 'node dist/main.js --dev'",
+		"tsc": "clear && printf \"\\e[3J\" && echo 'Running TypeScript Compiler...\n' && tsc --diagnostics || true",
 		"rm": "npm run purge",
-		"purge": "npm run clean && rimraf node_modules",
-		"clean": "rimraf dist",
+		"purge": "npm run clean && rm -rf node_modules",
+		"clean": "rm -rf dist",
 		"build": "npm run clean && tsc",
 		"start": "npm run build && node dist/main.js",
 		"prepare": "npm run build"
@@ -68,10 +68,8 @@
 		"@types/cron": "latest",
 		"@types/eyes": "latest",
 		"@types/node": "latest",
-		"rimraf": "latest",
-		"ts-node": "latest",
-		"ts-node-dev": "latest",
-		"tslint": "latest",
+		"tsc-watch": "latest",
 		"typescript": "latest"
 	}
 }
+
