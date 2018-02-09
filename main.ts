@@ -2,115 +2,67 @@
 
 declare global { namespace NodeJS { interface Process { dev: boolean } } }
 process.dev = process.argv.indexOf('--dev') >= 0
-
-const CONFIG = { sounds: { major: 'proxima', minor: 'click' } } // , volumes: { high: 50, low: 20 } }
+if (process.dev) require('source-map-support').install();
 
 // 
 
 import * as eyes from 'eyes'
 import * as clc from 'cli-color'
+import * as throbber from 'cli-color/throbber'
 import * as cron from 'cron'
 import * as loudness from 'loudness'
 const player = require('play-sound')()
 
 
 
-const SYSTEM = { muted: false, volume: 10, ready: process.dev }
-
-function init() {
-	return Promise.resolve().then(function() {
-		return Promise.all([getMuted(), getVolume()])
-
-	}).then(function(resolved) {
-		SYSTEM.muted = resolved[0]
-		if (Number.isFinite(resolved[1])) SYSTEM.volume = resolved[1];
-		return Promise.resolve()
-
-	}).catch(function(error) {
-		eyes.inspect(error, '\n\ninit > ERROR')
-
-	}).then(function() {
-		SYSTEM.ready = true
-		eyes.inspect(SYSTEM.ready, '\n\ninit > ready')
-		if (process.dev) playMP3(CONFIG.sounds.minor);
-		setInterval(() => process.stdout.write((clc as any).erase.lineRight), 1000)
-
-	})
-}
-setImmediate(init)
-
-
-
-function onTick(sound: keyof typeof CONFIG.sounds) {
-	if (!SYSTEM.ready) return Promise.resolve();
-
-	return Promise.resolve().then(function() {
-		return Promise.all([getMuted(), getVolume()])
-
-	}).then(function(resolved) {
-		SYSTEM.muted = resolved[0]
-		if (Number.isFinite(resolved[1])) SYSTEM.volume = resolved[1];
-		
-		console.log('SYSTEM >')
-		eyes.inspect(SYSTEM)
-		
-		let volume = SYSTEM.muted ? CONFIG.volumes.low : CONFIG.volumes.high
-		return setVolume(volume)
-
-	}).then(function() {
-		return playMP3(CONFIG.sounds[sound])
-
-	}).then(function() {
-		return Promise.all([
-			setMuted(SYSTEM.muted),
-			setVolume(SYSTEM.volume),
-		])
-
-	}).catch(function(error) {
-		eyes.inspect(error, '\n\nonTick > ERROR')
-	})
+const CONFIG = {
+	sounds: { major: 'proxima', minor: 'click' },
+	minvolume: 20,
 }
 
 
 
 new cron.CronJob({
-	cronTime: '*/5 * * * *',
-	timeZone: 'America/New_York',
-	start: true,
+	cronTime: '*/5 * * * *', timeZone: 'America/New_York', start: true,
 	onTick() {
 		let time = new Date().toLocaleString().split(' ').splice(1, 1)[0]
-		eyes.inspect(SYSTEM.ready, '\n\n[' + clc.bold.magenta(time) + '] onTick > ' + sounds + ' > ready')
 		let sound = 'minor' as keyof typeof CONFIG.sounds
 		if (new Date().getMinutes() % 15 == 0) sound = 'major';
-		onTick(sound)
+		onTick(CONFIG.sounds[sound])
 	},
+	runOnInit: process.dev,
 })
 
 
 
-// new cron.CronJob({
-// 	cronTime: '0/15 * * * *',
-// 	timeZone: 'America/New_York',
-// 	start: true,
-// 	onTick() { onTick('major') },
-// 	runOnInit: process.dev,
-// })
+function onTick(sound: string) {
+	const system = { muted: false, volume: CONFIG.minvolume }
+	return Promise.resolve().then(function() {
+		return Promise.all([
+			getMuted(),
+			getVolume(),
+		])
 
-// new cron.CronJob({
-// 	cronTime: '5/15 * * * *',
-// 	timeZone: 'America/New_York',
-// 	start: true,
-// 	onTick() { onTick('minor') },
-// 	// runOnInit: process.dev,
-// })
+	}).then(function(resolved) {
+		system.muted = resolved[0]
+		if (Number.isFinite(resolved[1])) system.volume = resolved[1];
 
-// new cron.CronJob({
-// 	cronTime: '10/15 * * * *',
-// 	timeZone: 'America/New_York',
-// 	start: true,
-// 	onTick() { onTick('minor') },
-// 	// runOnInit: process.dev,
-// })
+		let volume = Math.max(system.volume, CONFIG.minvolume)
+		return setVolume(volume)
+
+	}).then(function() {
+		return playMP3(sound)
+
+	}).then(function() {
+		return Promise.all([
+			setMuted(system.muted),
+			setVolume(system.volume),
+		])
+
+	}).catch(function(error) {
+		console.error('onTick > error', error)
+	})
+}
 
 
 
@@ -118,8 +70,7 @@ function playMP3(file: string) {
 	file = 'assets/' + file + '.mp3'
 	return new Promise<void>(function(resolve, reject) {
 		player.play(file, function(error) {
-			if (error) return reject(error);
-			resolve()
+			if (error) return reject(error); resolve()
 		})
 	})
 }
@@ -155,5 +106,9 @@ function setMuted(muted: boolean) {
 		})
 	})
 }
+
+
+
+{ throbber(function(s) { process.stdout.write(s) }, 100).start() }
 
 
