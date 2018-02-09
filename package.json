@@ -1,6 +1,6 @@
 {
 	"name": "15-minute-rule",
-	"version": "0.9.3",
+	"version": "0.9.5",
 	"description": "System notification dings every 15 minutes reminding you to stop OT'ing (overthinking)",
 	"author": {
 		"name": "Robert Laverty",
@@ -45,7 +45,7 @@
 		"node": ">=4.2.0"
 	},
 	"scripts": {
-		"i": "npm install || true && tsc-fix",
+		"i": "npm install || true && tsc-noclear",
 		"r": "npm run dev",
 		"dev": "tsc-watch --onSuccess 'node dist/main.js --dev'",
 		"tsc": "clear && printf \"\\e[3J\" && echo 'Running TypeScript Compiler...\n' && tsc --diagnostics || true",
@@ -73,4 +73,3 @@
 		"typescript": "latest"
 	}
 }
-

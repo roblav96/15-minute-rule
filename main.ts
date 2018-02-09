@@ -1,4 +1,4 @@
-// 
+#! /usr/bin/env node
 
 declare global { namespace NodeJS { interface Process { dev: boolean } } }
 process.dev = process.argv.indexOf('--dev') >= 0
