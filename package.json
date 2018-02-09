@@ -69,7 +69,7 @@
 		"@types/eyes": "latest",
 		"@types/node": "latest",
 		"tsc-watch": "latest",
-		"typescript": "latest"
+		"typescript": "2.6.2"
 	}
 }
 
