@@ -6,7 +6,6 @@ if (process.dev) require('source-map-support').install();
 
 // 
 
-import * as eyes from 'eyes'
 import * as clc from 'cli-color'
 import * as throbber from 'cli-color/throbber'
 import * as cron from 'cron'
@@ -16,8 +15,9 @@ const player = require('play-sound')()
 
 
 const CONFIG = {
-	sounds: { major: 'proxima', minor: 'click' },
-	minvolume: 20,
+	// sounds: { major: 'proxima', minor: 'click' },
+	sound: 'click',
+	minvolume: 50,
 }
 
 
@@ -25,10 +25,11 @@ const CONFIG = {
 new cron.CronJob({
 	cronTime: '*/5 * * * *', timeZone: 'America/New_York', start: true,
 	onTick() {
-		let time = new Date().toLocaleString().split(' ').splice(1, 1)[0]
-		let sound = 'minor' as keyof typeof CONFIG.sounds
-		if (new Date().getMinutes() % 15 == 0) sound = 'major';
-		onTick(CONFIG.sounds[sound])
+		// let time = new Date().toLocaleString().split(' ').splice(1, 1)[0]
+		// let sound = 'minor' as keyof typeof CONFIG.sounds
+		// if (new Date().getMinutes() % 15 == 0) sound = 'major';
+		// onTick(CONFIG.sounds[sound])
+		onTick('click')
 	},
 	runOnInit: process.dev,
 })
